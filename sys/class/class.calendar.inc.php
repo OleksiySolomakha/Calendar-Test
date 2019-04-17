@@ -73,8 +73,9 @@
 			if (!empty($id)) 
 			{
 				
-				$sql .= " WHERE `event_id` =: id LIMIT 1";
+				$sql .= " WHERE `event_id`>0";
 
+				//print_r($event_end); exit;
 			} 
 
 			else
@@ -89,19 +90,19 @@
 				$end_ts = mktime(23, 59, 59, $this->_m+1, 0	, $this -> _y);
 				$start_date = date('Y-m-d H:i:s', $start_ts);
 				$end_date = date('Y-m-d H:i:s', $end_ts);
-
+ 
 				//filter needfull events for this month
 
 				$sql .= " WHERE `event_start` BETWEEN '$start_date'
 				 AND '$end_date' ORDER BY `event_start`";
-
+				 
 			}
 
 			try
 
 			{
-				// print_r(sql);exit;
-				$stmt = $this->db->prepare("SELECT * FROM `events`");
+				
+				$stmt = $this->db->prepare($sql);
 				
 				// connect parameter if id where transferred 
 
@@ -266,16 +267,104 @@
 
 			$start = date('g:ia', $ts);
 
-			$end = date('g:ia', strtotime($event ->end));
+			$end = date('G:ia', strtotime($event ->end));
 
 			// generate and return markup
 
 			return "<h2>$event->title</h2>"
-				. "\n\t<p class=\"dates\">$date, $start&mdash;#end</p>"
+				. "\n\t<p class=\"dates\">$date, $start&mdash;$end</p>"
 				. "\n\t<p>$event->description</p>";
+
 
 		}
 
+		//Create events generation form
+
+		public function displayForm()
+		{
+
+			// connect ID
+
+			if (isset($_POST['event_id']))
+			{
+
+				$id = (int) $_POST['event_id'];
+				
+			}
+			else
+			{
+
+				$id=NULL;
+
+			}
+
+			$submit = "Create  Event Trulala";
+
+			if (!empty($id)) 
+			{
+
+				$event = $this->_loadEventById($id);
+
+				if (!is_object($event))
+				{
+
+					return NULL;
+
+				}
+
+				$submit = "Change trulala Event";
+			
+			}
+
+			//create HTML
+
+			return <<<FORM_MARKUP
+
+			<form action="assets/inc/process.inc.php" method="post">
+				
+				<fieldset>
+					
+					<legend>$submit</legend>
+
+					<lable for="event_title">Name of Event Trulala</lable>
+
+					<input type="text" name="event_title" id="event_title"
+						value="$event->title"/>
+
+					<lable for="event_start">Time to Start Trulala</lable>
+
+					<input type="text" name="event_start" id="event_start"
+						value="$event->start"/>
+
+					<lable for="event_end">Time to End Trulala</lable>
+
+					<input type="text" name="event_end" id="event_end"
+						value="$event->end"/>
+
+					<lable for="event_discription">Discription Trulala</lable>
+
+					<textarea name="event_discription" id="event_discription">
+						$event->discription"
+					</textarea>
+
+					<input type="hidden" name="event_id" value="$event->id"/>
+
+					<input type="hidden" name="token" value="$_SESSION[token]"/>
+
+					<input type="hidden" name="action" value="event_edit"/>
+
+					<input type="submit" name="event_submit" value="$submit"/>
+
+					or <a href="./">Cancel</a>
+					
+				</fieldset>
+
+
+			</form>
+
+			FORM_MARKUP;
+
+		}
 		
 
 

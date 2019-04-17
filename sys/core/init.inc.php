@@ -1,5 +1,19 @@
 <?php
 
+	//session start
+
+	session_start();
+
+	//defender mark
+
+	if (!isset($_SESSION['token']))
+	{
+
+		$_SESSION['token'] = sha1(uniqid(mt_rand(),TRUE));
+
+	}
+
+
 	// take needfull configuration information
 
 	include_once '../sys/config/db-cred.inc.php';
@@ -7,11 +21,11 @@
 	//define constant for configuration information
 
 	foreach ($C as $name => $val) 
-{
+	{
 
-	define($name, $val);
+		define($name, $val);
 
-}
+	}
 	//Create PDO-object
 
 	$dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
