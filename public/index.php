@@ -3,11 +3,10 @@
 	//turn on needfull files
 
 	include_once '../sys/core/init.inc.php';
-	include_once '../sys/class/class.calendar.inc.php';
-	include_once '../sys/class/class.db_connect.inc.php';
+	// include_once '../sys/class/class.calendar.inc.php';
+	// include_once '../sys/class/class.db_connect.inc.php';
 	
 	//download calendar for January
-
 	$cal = new Calendar($dbo, "2019-01-01 12:00:00");
 
 
@@ -15,7 +14,7 @@
 
 	$page_title = "Calendar of Events";
 
-	$css_files = array('style.css');
+	$css_files = ['style.css'];
 
 	// plug in start of page
 	

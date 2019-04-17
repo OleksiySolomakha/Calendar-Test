@@ -28,36 +28,36 @@
 			parent::__construct($dbo);
 		
 
-		// colect and save information wich relate to month
+			// colect and save information wich relate to month
 
-		if (isset($useDate)) 
-		{
-			$this -> _useDate = $useDate;	
-		}
-		else
-		{
-			$this -> _useDate = date('Y-m-d H:i:s');
-		}
+			if (isset($useDate)) 
+			{
+				$this -> _useDate = $useDate;	
+			}
+			else
+			{
+				$this -> _useDate = date('Y-m-d H:i:s');
+			}
 
-		// transform in UNIX timestamp, then define month and year
-		// wich will be used to create a calendar
-		
-		$ts = strtotime($this -> _useDate);
-		$this -> _m = date('m', $ts);
-		$this -> _y = date('y', $ts);
+			// transform in UNIX timestamp, then define month and year
+			// wich will be used to create a calendar
+			
+			$ts = strtotime($this -> _useDate);
+			$this -> _m = date('m', $ts);
+			$this -> _y = date('y', $ts);
 
-		//define how many days in month
+			//define how many days in month
 
-		$this -> _daysInMonth = cal_days_in_month(
-			CAL_GREGORIAN,
-			$this -> _m,
-			$this -> _y
-		);
+			$this -> _daysInMonth = cal_days_in_month(
+				CAL_GREGORIAN,
+				$this -> _m,
+				$this -> _y
+			);
 
-		//define, from what day of week month begin
+			//define, from what day of week month begin
 
-		$ts = mktime(0, 0, 0, $this -> _m, 1, $this -> _y);
-		$this -> _startDay = date('w', $ts);
+			$ts = mktime(0, 0, 0, $this -> _m, 1, $this -> _y);
+			$this -> _startDay = date('w', $ts);
 
 		}
 
@@ -68,12 +68,12 @@
 
 		private function _loadEventData($id=NULL)
 		{
-			$sql = "SELECT 'event_id', 'event_title', 'event_desc', 
-			'event_start', 'event_end' FROM 'events'";
+			$sql = "SELECT `event_id`, `event_title`, `event_desc`, 
+			`event_start`, `event_end` FROM `events`";
 			if (!empty($id)) 
 			{
 				
-				$sql .= "WHERE 'event_id' =: id LIMIT 1";
+				$sql .= " WHERE `event_id` =: id LIMIT 1";
 
 			} 
 
@@ -85,36 +85,42 @@
 
 				//find first and last days in month
 
-				$start_ts = mktime(0, 0, 0, $this -> _m, 1,$this -> _y);
-				$end_ts = mktime(23, 59, 59, $this -> _m + 1, 0, $this -> _y);
+				$start_ts = mktime(0, 0, 0, $this->_m, 1,$this -> _y);
+				$end_ts = mktime(23, 59, 59, $this->_m+1, 0	, $this -> _y);
 				$start_date = date('Y-m-d H:i:s', $start_ts);
 				$end_date = date('Y-m-d H:i:s', $end_ts);
 
 				//filter needfull events for this month
 
-				$sql .= "WHERE 'event_start' BETWEN '$start_date'
-				AND '$end_date' ORDER BY 'event_start'";
+				$sql .= " WHERE `event_start` BETWEEN '$start_date'
+				 AND '$end_date' ORDER BY `event_start`";
 
 			}
 
 			try
 
 			{
-				$stmt = $this -> db ->prepare($sql);
-
+				// print_r(sql);exit;
+				$stmt = $this->db->prepare("SELECT * FROM `events`");
+				
 				// connect parameter if id where transferred 
 
-				if (!empty($id)) 
-				{
-					$stmt -> bindParam(" :id", $id, PDO::PARAM_INT);
+				// if (!empty($id)) 
+				// {
+				// 	$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
+				// }
+
+				$success = $stmt->execute();
+				if($success) {
+					$results = $stmt->fetchAll();
+					$stmt->closeCursor();
+	
+					return $results;
+				} else {
+					print_r($stmt->errorInfo());
 				}
-
-				$stmt -> execute();
-				$results = $stmt -> fetchAll(PDO::FETCH_ASSOC);
-				$stmt -> closeCursor();
-
-				return $results;
+				return [];
 			}
 
 			catch( Exception $e)

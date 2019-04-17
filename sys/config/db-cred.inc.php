@@ -5,7 +5,7 @@ $C= array();
 	
 	//host URL
 
-$C['DB_HOST'] = '127.0.0.1:3306';
+$C['DB_HOST'] = '127.0.0.1';
 
 	//DB user name
 
