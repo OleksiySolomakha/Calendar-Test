@@ -1,0 +1,84 @@
+body{
+	background-color: #3bce65;
+	font-family: Ralevay, Ubuntu, Nunito;
+	font-size: 1.5em;
+}
+#content{
+	display: flex;
+flex-wrap: nowrap;
+margin: auto;
+padding: 25px;
+width: 90%;
+flex-direction: column;
+}
+h2,p{
+	text-align: center;
+	color:#9b069b;
+}
+ul{
+	display: flex;
+flex-wrap: nowrap;		
+background-color: #ce8e3a;
+border: 1%;
+border-color: #ffffff;
+margin: auto;
+text-align: center;
+height: 60px;
+width: 90%;
+padding: 0px;
+	
+}
+li{
+	display: flex;
+	flex-wrap: nowrap;
+	list-style-type: none;
+	background-color:#ce3939; 
+	border: 1%;
+	border-color: #ffffff;
+	margin: auto;
+	width: 7%;
+}
+li:hover{
+	background-color:#7c1616;
+
+}
+.weekdays{
+	
+	
+
+}
+
+.weekdays li{
+	
+	background-color: #ef3f1c;
+
+}
+.fill{
+	background-color: #ccc508;
+}
+
+.weekdays li:hover, li.fill:hover{
+	background-color: #ccc508;
+}
+
+.weekdays li:hover, .today{
+	background-color: #ef3f1c;
+}
+li strong{
+
+	}
+	
+li a {
+	position: relative;
+	display: block;
+	font-size: 0.8em;
+	font-style: helvertica;
+	background-color:#ed5638;
+	text-decoration: overline; 
+
+	
+}
+li a :hover{
+	background-color: #ef3f1c;
+
+}
