@@ -316,9 +316,11 @@
 			
 			}
 
+			
+
 			//create HTML
 
-			return <<<FORM_MARKUP
+return <<<FORM_MARKUP
 
 			<form action="assets/inc/process.inc.php" method="post">
 				
@@ -344,7 +346,9 @@
 					<lable for="event_discription">Discription Trulala</lable>
 
 					<textarea name="event_discription" id="event_discription">
-						$event->discription"
+						<1event->
+							<discription></discription>
+						</1event->
 					</textarea>
 
 					<input type="hidden" name="event_id" value="$event->id"/>
@@ -362,7 +366,91 @@
 
 			</form>
 
-			FORM_MARKUP;
+FORM_MARKUP;
+
+		}
+
+
+		//check , edit and save events in form
+
+		public function processForm()
+		{
+
+			//exit if action is wrong
+
+			if ($_POST['action']!='event_edit')
+			{
+				return "Incorrect try to call ProcessForm()";
+			}
+
+			//took data from form
+
+			$title = htmlentities($_POST['event_title'], ENT_QUOTES);
+
+			$desc = htmlentities($_POST['event_description'], ENT_QUOTES);
+
+			$start = htmlentities($_POST['event_start'], ENT_QUOTES);
+
+			$end = htmlentities($_POST['event_end'], ENT_QUOTES);
+
+			//if id not taken, create new event 
+
+			if (empty($_POST['event_id']))
+			{
+				
+				$sql ="INSERT INTO `events`( `event_title`, `event_desc`, `event_start`, `event_end`)
+					 VALUES (:title, :description, :start, :end)";
+
+			}
+
+			//update event if it change
+
+			else
+			{
+
+				$id = (int) $_POST['event_id'];
+
+				$sql = "UPDATE `events`  SET 
+							
+						`event_title` =:title, 
+						
+						`event_desc` =:description, 
+
+						`event_start` =:start, 
+
+						`event_end` =:end,
+						WHERE `event_id`=$id";	
+
+			}
+
+			try
+			{
+
+				$stmt = $this->db->prepare($sql);
+
+				$stmt->bindParam(":title", $title, PDO::PARAM_STR);
+
+				$stmt->bindParam(":description", $desc, PDO::PARAM_STR);
+
+				$stmt->bindParam(":start", $start, PDO::PARAM_STR);
+
+				$stmt->bindParam(":end", $end, PDO::PARAM_STR);
+
+				$stmt->execute();
+
+				$stmt->closeCursor();
+
+				return TRUE;
+
+			}
+
+			catch (Exception $e)
+			{
+
+				return $e->getMessage();
+
+			}
+
 
 		}
 		
