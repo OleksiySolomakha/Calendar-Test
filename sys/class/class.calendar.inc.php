@@ -1,9 +1,10 @@
 <?php
-//Класс с поключением к БД, для оздания календаря и работай с ним
+	//Класс с поключением к БД, для оздания календаря и работай с ним
 	/**
 	 * Класс с поключением к БД, для оздания календаря и работай с ним
 	 */
 	include_once '../sys/class/class.db_connect.inc.php';
+
 
 
 	class Calendar extends DB_Connect
@@ -73,9 +74,9 @@
 			if (!empty($id)) 
 			{
 				
-				$sql .= " WHERE `event_id`>0";
+				$sql .= " WHERE `event_id` =:id LIMIT 1 ";
 
-				//print_r($event_end); exit;
+				//print_r($sql); exit;
 			} 
 
 			else
@@ -104,13 +105,13 @@
 				
 				$stmt = $this->db->prepare($sql);
 				
-				// connect parameter if id where transferred 
+				 //connect parameter if id where transferred 
 
-				// if (!empty($id)) 
-				// {
-				// 	$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+				 if (!empty($id)) 
+				 {
+				 	$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
-				// }
+				}
 
 				$success = $stmt->execute();
 				if($success) {
@@ -232,7 +233,11 @@
 
 			$html .= "\n\t</ul>\n\n";
 
-			return $html;
+			//show admin options 
+
+			$admin = $this->_adminGeneralOptions();
+
+			return $html.$admin;
 
 
 
@@ -269,11 +274,17 @@
 
 			$end = date('G:ia', strtotime($event ->end));
 
+			//if user has enter , show admin options
+
+			$admin = $this->_adminEntryOptions($id);
+
 			// generate and return markup
 
 			return "<h2>$event->title</h2>"
 				. "\n\t<p class=\"dates\">$date, $start&mdash;$end</p>"
-				. "\n\t<p>$event->description</p>";
+				. "\n\t<p>$event->description</p>$admin";
+
+
 
 
 		}
@@ -345,11 +356,8 @@ return <<<FORM_MARKUP
 
 					<lable for="event_discription">Discription Trulala</lable>
 
-					<textarea name="event_discription" id="event_discription">
-						<1event->
-							<discription></discription>
-						</1event->
-					</textarea>
+					<textarea name="event_discription" 
+					id="event_discription">$event->description</textarea>
 
 					<input type="hidden" name="event_id" value="$event->id"/>
 
@@ -412,13 +420,13 @@ FORM_MARKUP;
 
 				$sql = "UPDATE `events`  SET 
 							
-						`event_title` =:title, 
+						`event_title`=:title, 
 						
-						`event_desc` =:description, 
+						`event_desc`=:description, 
 
-						`event_start` =:start, 
+						`event_start`=:start, 
 
-						`event_end` =:end,
+						`event_end`=:end
 						WHERE `event_id`=$id";	
 
 			}
@@ -427,7 +435,7 @@ FORM_MARKUP;
 			{
 
 				$stmt = $this->db->prepare($sql);
-
+// print_r($stmt);exit;
 				$stmt->bindParam(":title", $title, PDO::PARAM_STR);
 
 				$stmt->bindParam(":description", $desc, PDO::PARAM_STR);
@@ -436,8 +444,8 @@ FORM_MARKUP;
 
 				$stmt->bindParam(":end", $end, PDO::PARAM_STR);
 
-				$stmt->execute();
-
+				$success = $stmt->execute();
+				//print_r($stmt->errorInfo());exit;
 				$stmt->closeCursor();
 
 				return TRUE;
@@ -453,9 +461,97 @@ FORM_MARKUP;
 
 
 		}
+
+		//delete event function
+
+		public function confirmDelete($id)
+		{
+
+			// check that ID was send
+
+			if (empty($id)) { return NULL; }
+
+
+			// check that ID is integer
+
+			$id = preg_replace('/[^0-9]/', '', $id);
+
+			//Check data from form if confrm form where with mark
+
+			if (isset($_POST['comfirm_delete']) && $_POST['token']==$_SESSION['token'])
+			{
+				
+				if ($_POST['confirm_delete']=="Yes I agree!")
+				{
+						
+					$sql = "DELETE FROM `events` WHERE `event_id`=':id LIMIT 1'";
+					
+
+					try
+					{
+
+						$stmt = $this->db->prepare($sql);
+
+						$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+						$stmt->execute();
+
+						$stmt->closeCursor();
+
+						header("Location: ./");
+
+						return;
+						
+						}
+
+						catch (Exception $e)
+						{
+
+							return $e->getMessage();
+
+						}
+
+				}
+			else
+				{
+
+				header("Location: ./");
+
+				return;
+
+				}
+			}
+
+			$event = $this->_loadEventById($id);
+
+				if ( !is_object($event)) { header("Location: ./"); }
+
+return<<<CONFIRM_DELETE
+
+		<form action="confirmdelete.php" method="post">
+			<h2> You realy want delete "$event->title"? </h2>
+
+			<p><strong>Deleted event<strong> Will not restore</strong></p>
+
+			<p>
+				<input type="submit" name="confirm_delete"
+					value="Yes I agree!"/>
+
+				<input type="submit" name="confirm_delete"
+					value="NO,It was JOKE"/>
+
+				<input type="hidden" name="event_id"
+					value="$event->id"/>
+
+				<input type="hidden" name="token"
+					value="$_SESSION[token]"/>
+			</p>
+		</form>
+
+CONFIRM_DELETE;
+
+		}
 		
-
-
 		// download all events treat month into array  
 
 		private function _createEventObj()
@@ -522,6 +618,50 @@ FORM_MARKUP;
 			 {
 			 	return NULL;
 			 }
+
+		}
+
+		private function _adminGeneralOptions()
+		{
+
+return <<<ADMIN_OPTIONS
+
+			<a href ="admin.php" class ="admin">+Add bew message !!!!!!!</a>
+
+ADMIN_OPTIONS;
+
+		}
+
+		//edit and delete options by ID
+
+		private function _adminEntryOptions($id)
+		{
+
+return <<<ADMIN_OPTIONS
+		
+	<div class="admin_options">
+		<form action="admin.php" method="post">
+			<p>
+				<input type="submit" name="edit_event"
+					value="Edit this PAGE!"/>
+
+				<input type="hidden" name="event_id"
+					value="$id"/>
+			</p>
+		</form>
+
+		<form action="confirmdelete.php" method="post">
+			<p>
+				<input type="submit" name="delete_event"
+					value="Delete EveNT"/>
+
+				<input type="hidden" name="event_id"
+					value="$id"/>
+			</p>
+		</form>
+	</div> <!--end.admin-options-->
+
+ADMIN_OPTIONS;
 
 		}
 

@@ -9,7 +9,7 @@
 	if (!isset($_SESSION['token']))
 	{
 
-		$_SESSION['token'] = sha1(uniqid(mt_rand(),TRUE));
+		$_SESSION['token'] = sha1(uniqid(mt_rand(), TRUE));
 
 	}
 
