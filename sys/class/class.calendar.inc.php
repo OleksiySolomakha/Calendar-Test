@@ -478,13 +478,12 @@ FORM_MARKUP;
 
 			//Check data from form if confrm form where with mark
 
-			if (isset($_POST['comfirm_delete']) && $_POST['token']==$_SESSION['token'])
+			if (isset($_POST['confirm_delete']) && $_POST['token']==$_SESSION['token'])
 			{
-				
 				if ($_POST['confirm_delete']=="Yes I agree!")
 				{
 						
-					$sql = "DELETE FROM `events` WHERE `event_id`=':id LIMIT 1'";
+					$sql = "DELETE FROM `events` WHERE `event_id` =:id LIMIT 1";
 					
 
 					try
@@ -495,21 +494,17 @@ FORM_MARKUP;
 						$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
 						$stmt->execute();
-
 						$stmt->closeCursor();
 
 						header("Location: ./");
 
 						return;
 						
-						}
+					} catch (Exception $e) {
 
-						catch (Exception $e)
-						{
+						return $e->getMessage();
 
-							return $e->getMessage();
-
-						}
+					}
 
 				}
 			else
@@ -526,7 +521,8 @@ FORM_MARKUP;
 
 				if ( !is_object($event)) { header("Location: ./"); }
 
-return<<<CONFIRM_DELETE
+// print_r($event);
+return <<<CONFIRM_DELETE
 
 		<form action="confirmdelete.php" method="post">
 			<h2> You realy want delete "$event->title"? </h2>
@@ -535,21 +531,20 @@ return<<<CONFIRM_DELETE
 
 			<p>
 				<input type="submit" name="confirm_delete"
-					value="Yes I agree!"/>
+					value="Yes I agree!" />
 
 				<input type="submit" name="confirm_delete"
-					value="NO,It was JOKE"/>
+					value="NO,It was JOKE" />
 
 				<input type="hidden" name="event_id"
-					value="$event->id"/>
+					value="$event->id" />
 
 				<input type="hidden" name="token"
-					value="$_SESSION[token]"/>
+					value="$_SESSION[token]" />
 			</p>
 		</form>
 
 CONFIRM_DELETE;
-
 		}
 		
 		// download all events treat month into array  
@@ -598,7 +593,7 @@ CONFIRM_DELETE;
 			if (empty($id))
 			
 			 {
-					return NULL;
+				return NULL;
 			 } 
 
 			 // download massive event
@@ -626,7 +621,7 @@ CONFIRM_DELETE;
 
 return <<<ADMIN_OPTIONS
 
-			<a href ="admin.php" class ="admin">+Add bew message !!!!!!!</a>
+			<a href ="admin.php" class ="admin">+Add new message !!!!!!!</a>
 
 ADMIN_OPTIONS;
 
@@ -659,7 +654,7 @@ return <<<ADMIN_OPTIONS
 					value="$id"/>
 			</p>
 		</form>
-	</div> <!--end.admin-options-->
+	</div> <!--end admin-options-->
 
 ADMIN_OPTIONS;
 

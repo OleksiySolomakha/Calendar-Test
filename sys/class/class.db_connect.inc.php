@@ -3,7 +3,7 @@
 *	Пдключение к БД 
 *
 */
-	class DB_Connect
+class DB_Connect
 {
 	
 	protected $db;

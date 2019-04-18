@@ -1,7 +1,6 @@
 <?php
-	// start session
-
-	session_start();
+// start session
+session_start();
 
 	include_once '../../../sys/config/db-cred.inc.php';
 
