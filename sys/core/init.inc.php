@@ -1,7 +1,5 @@
 <?php
-
-	//session start
-
+//session start
 	session_start();
 
 	//defender mark

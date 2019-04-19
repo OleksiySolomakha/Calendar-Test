@@ -1,6 +1,5 @@
 <?php 
-	//constant holder massive
-
+//constant holder massive
 $C= array();
 	
 	//host URL

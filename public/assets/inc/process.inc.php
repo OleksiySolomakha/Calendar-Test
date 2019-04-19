@@ -1,8 +1,6 @@
 <?php
-// start session
 session_start();
-
-	include_once '../../../sys/config/db-cred.inc.php';
+include_once '../../../sys/config/db-cred.inc.php';
 
 	// find constante 
 
@@ -15,7 +13,7 @@ session_start();
 		
 	
 
-	//searching massive for ations
+	//searching massive for actions
 
 	$ations = array(
 				'event_edit' => array(
@@ -25,6 +23,12 @@ session_start();
 					'method' => 'processForm',
 
 					'header' => 'Location: ../../'
+						),
+				//modificate for log in
+				'user_login' => array(
+					'object' => 'Admin',
+					'method' => 'processLoginForm',		
+					'header' => 'Location: ../../'	
 						)
 					);
 	

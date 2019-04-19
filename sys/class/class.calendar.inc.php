@@ -1,10 +1,9 @@
 <?php
-	//Класс с поключением к БД, для оздания календаря и работай с ним
-	/**
-	 * Класс с поключением к БД, для оздания календаря и работай с ним
-	 */
+/**
+ * Класс с поключением к БД, для cоздания календаря и работай с ним
+ */
 	include_once '../sys/class/class.db_connect.inc.php';
-
+	// include_once (__DIR__ . '/class.db_connect.inc.php');
 
 
 	class Calendar extends DB_Connect
@@ -378,7 +377,6 @@ FORM_MARKUP;
 
 		}
 
-
 		//check , edit and save events in form
 
 		public function processForm()
@@ -394,7 +392,7 @@ FORM_MARKUP;
 			//took data from form
 
 			$title = htmlentities($_POST['event_title'], ENT_QUOTES);
-
+//print_r($title);exit;
 			$desc = htmlentities($_POST['event_description'], ENT_QUOTES);
 
 			$start = htmlentities($_POST['event_start'], ENT_QUOTES);
@@ -435,7 +433,7 @@ FORM_MARKUP;
 			{
 
 				$stmt = $this->db->prepare($sql);
-// print_r($stmt);exit;
+
 				$stmt->bindParam(":title", $title, PDO::PARAM_STR);
 
 				$stmt->bindParam(":description", $desc, PDO::PARAM_STR);
@@ -445,7 +443,7 @@ FORM_MARKUP;
 				$stmt->bindParam(":end", $end, PDO::PARAM_STR);
 
 				$success = $stmt->execute();
-				//print_r($stmt->errorInfo());exit;
+				
 				$stmt->closeCursor();
 
 				return TRUE;

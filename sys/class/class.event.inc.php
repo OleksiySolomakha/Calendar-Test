@@ -1,7 +1,7 @@
-<?php  
+<?php
 //save information about events
-class Event
-{
+	class Event
+	{
 
 	// @var int - identify events
 

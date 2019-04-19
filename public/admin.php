@@ -1,8 +1,6 @@
-<?php 
-
-	//include necessary files 
-
-	include_once '../sys/core/init.inc.php';
+<?php
+//include necessary files 
+include_once '../sys/core/init.inc.php';
 
 	// display start part of  page
 

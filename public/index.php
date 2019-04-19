@@ -1,7 +1,5 @@
 <?php 
-	
-	//turn on needfull files
-
+//turn on needfull files
 	include_once '../sys/core/init.inc.php';
 	// include_once '../sys/class/class.calendar.inc.php';
 	include_once '../sys/class/class.db_connect.inc.php';
@@ -35,6 +33,11 @@
 	}
 	*/
 	?>
+	<p><?php 
+
+		echo isset($_SESSION['user']) ? "Admin here!" : "You are not an Admin!";
+
+	 ?></p>
 
 	</div><!--end #content-->
 
