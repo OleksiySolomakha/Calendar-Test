@@ -30,7 +30,7 @@ include_once 'assets/common/footer.inc.php';
 			<a href="./">CANCEL IT</a>
 
 		</fieldset>
-	</form>
+	
 
 </div><!--end cntent-->
 

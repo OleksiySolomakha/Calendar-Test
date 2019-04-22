@@ -1,13 +1,15 @@
 <?php 
 //check ID
-if (isset($_POST['event_id'])) 
+if (isset($_POST['event_id']) && isset($_SESSION['user'])) 
 {
-
+	//take event_id from URL string
+ 
 	$id=(int) $_POST['event_id'];
 
 }
 else
 {
+	//go to main page if user is unregistеred
 
 	header("Location: ./");
 

@@ -66,13 +66,16 @@ class Admin extends DB_Connect
 		if (!isset($user)) 
 		{
 			return "Wrong DUDE name!!!";
+		}
 		
-
 		//take hash code from user
 
 		$hash = $this->_getSaltedHash($pword, $user['user_pass']);
 
 		//saved users data in session
+
+		if ($user['user_pass']==$hash)
+		{	
 
 		$_SESSION['user']=array(
 				'id'=> $user['user_id'],
@@ -80,19 +83,41 @@ class Admin extends DB_Connect
 				'email'=> $user['user_emal']
 				
 			);
-	print_r($user);
+
+		//print_r($user);
+
 			return TRUE;
 
 		}
+
 		//critacal end if passwods didm`t match
+
 		else
 		{
 			return "Wrong name or password";
 		}
 
-	// generate special hash code
 	}
-	 function _getSaltedHash($string, $salt=NULL)
+
+	// end user session
+
+	public function processLogout()
+	{
+		if ($_POST['action']!='user_logout') 
+		{
+			return "Wrong parameter in attribute Action";
+		}
+
+		// delete massive user from this session
+
+		session_destroy();
+
+		return TRUE;
+	}
+
+	//generate special hash code
+
+	 private function _getSaltedHash($string, $salt=NULL)
 	{
 
 		//generate salt , if it won`t be able
@@ -113,6 +138,7 @@ class Admin extends DB_Connect
 		return $salt . sha1($salt . $string); 
 	}
 	//create  hash-code for password
+
  // 	public function testSaltedHash($string, $salt=NULL)
 	// {
 	// 	return $this->_getSaltedHash($string, $salt);

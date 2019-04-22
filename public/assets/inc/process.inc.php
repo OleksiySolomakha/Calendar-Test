@@ -24,12 +24,28 @@ include_once '../../../sys/config/db-cred.inc.php';
 
 					'header' => 'Location: ../../'
 						),
+
 				//modificate for log in
+
 				'user_login' => array(
+
 					'object' => 'Admin',
-					'method' => 'processLoginForm',		
+
+					'method' => 'processLoginForm',
+
 					'header' => 'Location: ../../'	
-						)
+						),
+				//end session array
+
+				'user_logout' => array(
+
+					'object' => 'Admin',
+
+					'method' => 'processLogout',
+
+					'header' => 'Location: ../../'
+					
+						)	
 					);
 	
 

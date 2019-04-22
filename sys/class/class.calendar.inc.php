@@ -616,12 +616,38 @@ CONFIRM_DELETE;
 
 		private function _adminGeneralOptions()
 		{
+			// if user enter at admin page , show admin attributes
+			if (isset($_SESSION['user']))
+			{
+				
 
 return <<<ADMIN_OPTIONS
 
 			<a href ="admin.php" class ="admin">+Add new message !!!!!!!</a>
+				<form action="assets/inc/process.inc.php" method="post">	
+					
+					<div>
+	
+						<input type="submit" value="Go AWAY" class="admin" />
 
+						<input type="hidden" name="token" value="$_SESSION[token]"/>
+
+						<input type="hidden" name="action" value="user_logout" />
+
+					</div>
+
+				</form>	
 ADMIN_OPTIONS;
+
+			}
+			else
+			{
+return <<<ADMIN_OPTIONS
+
+				<a href="login.php">Log In<a/>
+ADMIN_OPTIONS;
+			}
+
 
 		}
 
@@ -629,6 +655,8 @@ ADMIN_OPTIONS;
 
 		private function _adminEntryOptions($id)
 		{
+			if (isset($_SESSION['user']))
+			{
 
 return <<<ADMIN_OPTIONS
 		
@@ -656,9 +684,13 @@ return <<<ADMIN_OPTIONS
 
 ADMIN_OPTIONS;
 
+			}
+			else
+			{
+				return NULL;
+			}
+
 		}
-
-
 	}
 
 

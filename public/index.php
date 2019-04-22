@@ -12,7 +12,7 @@
 
 	$page_title = "Calendar of Events";
 
-	$css_files = ['style.css', 'admin.css'];
+	$css_files = ['style.css', 'admin.css', 'ajax.css'];
 
 	// plug in start of page
 	

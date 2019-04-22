@@ -2,6 +2,14 @@
 //include necessary files 
 include_once '../sys/core/init.inc.php';
 
+	//redirect unregistered user to main page
+
+	if (!isset($_SESSION['user']))
+	{
+		header("Location: ./");
+		exit;
+	}
+
 	// display start part of  page
 
 	$page_title="Добавить / Редактировать событие";
