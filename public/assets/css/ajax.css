@@ -3,7 +3,9 @@
 }
 
 .modal-window{
-
+ 	width: 250px;
+ 	height: auto;
+ 	
 }
 
 .modal-close-btn{

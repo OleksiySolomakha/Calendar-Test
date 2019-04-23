@@ -19,7 +19,7 @@ jQuery(function($){
 
 				return $("<div>")
 					.addClass("modal-window")
-					.appendTo('body');
+					.appendTo("body");
 			}
 			else
 			{
@@ -40,7 +40,7 @@ jQuery(function($){
 
 		//edit class "active" to the link
 
-		$(this).addClass('active');
+		$(this).addClass("active");
 
 		//take attribute from string "href"
 
@@ -48,7 +48,11 @@ jQuery(function($){
 					.attr("href")
 					.replace(/.+?\?(.*)$/,"$1");
 
-		//output request srting
+		//check modal-window, hose one or create new
+
+		modal = fx.initModal();
+
+		//output request string
 
 		console.log(data);
 	});
