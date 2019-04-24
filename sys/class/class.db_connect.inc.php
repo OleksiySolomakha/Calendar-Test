@@ -1,6 +1,6 @@
 <?php
-//Пдключение к БД 
-class DB_Connect
+//Пдключение к БД
+Class DB_Connect
 {
 	
 	protected $db;

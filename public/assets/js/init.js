@@ -1,8 +1,12 @@
 jQuery(function($){
 
+		// file witch will connect with ajax
+
+	var processFile = "assets/inc/ajax.inc.php",
+
 		// manipulation function for modal window
 
-	var fx = {
+	 fx = {
 
 		//return modal window if it exist
 		//in another case create new
@@ -12,7 +16,7 @@ jQuery(function($){
 			//if it have no needfull elements
 			//lenght = 0!!
 
-			if($(".modal-window").lenght==0)
+			if($(".modal-window").length==0)
 			{
 				//create div element,
 				//add class and it to descriptor
@@ -40,21 +44,40 @@ jQuery(function($){
 
 		//edit class "active" to the link
 
-		$(this).addClass("active");
+		$(this).addClass("active");	
+		//document.getElementById("modal-window");
+		console.log($(this).text());
 
 		//take attribute from string "href"
 
 		var data = $(this)
 					.attr("href")
 					.replace(/.+?\?(.*)$/,"$1");
-
 		//check modal-window, hose one or create new
 
-		modal = fx.initModal();
+		var modal = fx.initModal();
+		//console.log(modal);
+		console.log('data', data);
+		//dowload information about event from DB
 
+		$.ajax({
+			url: processFile,
+			type: "POST",
+			data: "action=event_view&" + data,
+			success: function(data){
+				//show information about event
+				console.log('success data', data);
+				modal.append(data);
+			},
+			error: function(msg) {
+				modal.append(msg);
+			}
+		});
+		
+		
 		//output request string
 
-		console.log(data);
+		// console.log(data);
 	});
 
 });

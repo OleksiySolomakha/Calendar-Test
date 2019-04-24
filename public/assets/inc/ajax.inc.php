@@ -1,7 +1,7 @@
 <?php
-
+//start session
 session_start();
-
+//include DB information
 include_once '../../../sys/config/db-cred.inc.php';
 
 //find constants for configuration information
@@ -16,12 +16,12 @@ foreach ( $C as $name => $val)
 	$actions = array(
 			'event_view' => array(
 					'object' => 'Calendar',
-					'method' => 'displayEvent'
+					'method' => '_displayEvent'
 			)
 	);
 
 	if (isset($actions[$_POST['action']]))
-	{
+	{	
 		$use_array = $actions[$_POST['action']];
 
 		$obj = new $use_array['object']($dbo);

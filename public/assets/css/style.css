@@ -1,84 +1,108 @@
 body{
-	background-color: #3bce65;
-	font-family: Ralevay, Ubuntu, Nunito;
-	font-size: 1.5em;
+	background-color: #789;
+	font-family: georgia, serif;
+	font-size: 13px;
 }
+
 #content{
-	display: flex;
-flex-wrap: nowrap;
-margin: auto;
-padding: 25px;
-width: 90%;
-flex-direction: column;
+	display: block;
+	width: 812px;
+	margin: 40px auto 10px;
+	padding: 10px;
+	background-color: #FFF;
+	border-radius: 10px;
+	border: 2px solid black;
+	box-shadow: 0 0 14px #123;
 }
+
 h2,p{
 	text-align: center;
-	color:#9b069b;
+	margin: 0 auto 14px;
 }
+
 ul{
-	display: flex;
-flex-wrap: nowrap;		
-background-color: #ce8e3a;
-border: 1%;
-border-color: #ffffff;
-margin: auto;
-text-align: center;
-height: 60px;
-width: 90%;
-padding: 0px;
-	
+	display: block;
+	clear: left;
+	height: 82px;
+	width: 812px;
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	background-color: #FFF;
+	text-align: center;
+	border: 1px solid black;
+	border-top: 0;
+	border-bottom: 2px solid black;
 }
+
 li{
-	display: flex;
-	flex-wrap: nowrap;
-	list-style-type: none;
-	background-color:#ce3939; 
-	border: 1%;
-	border-color: #ffffff;
-	margin: auto;
-	width: 7%;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 20px 2px 2px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	width: 110px;
+	height: 60px;
+	overflow: hidden;
+	background-color: white;
 }
+
 li:hover{
-	background-color:#7c1616;
-
+	background-color: #FCB;
+	z-index: 1;
+	box-shadow: 0 0 10px #789;
 }
-.weekdays{
-	
-	
 
+.weekdays{
+	height: 20px;
+	border-top: 2px solid black;
 }
 
 .weekdays li{
-	
-	background-color: #ef3f1c;
-
+	height: 16px;
+	padding: 2px 2px;
+	background-color: #BCF;
 }
+
 .fill{
-	background-color: #ccc508;
+	background-color: #BCD;
 }
 
 .weekdays li:hover, li.fill:hover{
-	background-color: #ccc508;
+	background-color: #BCD;
+	box-shadow: none;
 }
 
 .weekdays li:hover, .today{
-	background-color: #ef3f1c;
+	background-color: #BCF;
 }
-li strong{
 
-	}
+li strong{
+	position: absolute;
+	top: 2px;
+	right: 2px;
+}
 	
 li a {
 	position: relative;
 	display: block;
-	font-size: 0.8em;
-	font-style: helvertica;
-	background-color:#ed5638;
-	text-decoration: overline; 
-
-	
+	border: 1px dotted black;
+	margin: 2px;
+	padding: 2px;
+	font-size: 11px;
+	background-color: #DEF;
+	text-align: left;
+	border-radius: 6px;
+	z-index: 1;
+	text-decoration: none;
+	color: black;
+	font-weight: bold;
+	font-style: italic;
 }
-li a :hover{
-	background-color: #ef3f1c;
 
+li a :hover{
+	background-color: #BCF;
+	z-index: 2;
+	box-shadow: 0 0 6px #789;
 }

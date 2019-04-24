@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once '../../../sys/config/db-cred.inc.php';
+	include_once '../../../sys/config/db-cred.inc.php';
 
 	// find constante 
 
@@ -10,8 +10,6 @@ include_once '../../../sys/config/db-cred.inc.php';
 		define($name, $val);
 
 	}
-		
-	
 
 	//searching massive for actions
 
@@ -56,12 +54,14 @@ include_once '../../../sys/config/db-cred.inc.php';
 		
 		$obj = new $use_array['object']($dbo);
 
+		// or use this
+		// if (TRUE === $msg=$obj->$use_array['method']())
 
-		if (TRUE === $msg=$obj->$use_array['method']())
-		{
-		
+		if (TRUE === $msg=$obj->$use_array['method'])
+		{ 
+			
 			header($use_array['header']);
-				
+			//print_r($use_array['header']);
 			exit;
 			
 		}

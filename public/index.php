@@ -1,4 +1,4 @@
-<?php 
+<?php
 //turn on needfull files
 	include_once '../sys/core/init.inc.php';
 	// include_once '../sys/class/class.calendar.inc.php';
