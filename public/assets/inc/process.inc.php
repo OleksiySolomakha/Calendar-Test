@@ -54,10 +54,10 @@ session_start();
 		
 		$obj = new $use_array['object']($dbo);
 
-		// or use this
-		// if (TRUE === $msg=$obj->$use_array['method']())
+		// or use this, no header erroor 
+		// if (TRUE === $msg=$obj->$use_array['method'])
 
-		if (TRUE === $msg=$obj->$use_array['method'])
+		if (TRUE === $msg=$obj->$use_array['method']())
 		{ 
 			
 			header($use_array['header']);
