@@ -83,6 +83,113 @@ jQuery(function($){
 								$(this).remove();
 							});
 
+					},
+
+					//add new event after save
+
+					"addevent":function(data,formData){
+
+							//make obj from string
+
+							var entry = fx.deserialize(formData),
+
+							//create obj "date" for this month
+
+							cal = new Date(NaN);
+
+							//create obj "date" for new event 
+
+							event = new Date(NaN);
+
+							// take from 'id, h2' calendar month 
+ 							
+ 							cdata = $("h2").attr("id").split('-');
+
+ 							// take day , month adn year from event
+
+ 							date = entry.event_start.split(' ')[0];
+
+ 							//break event data by parts
+
+ 							edata = date.split('-');
+
+ 							//make date for calendar obj "date"
+
+ 							cal.setFullYear(cdata[1], cdata[2], 1);
+
+ 							//make date for event obj "date"  
+
+ 							event.setFullYear(edata[0], edata[1], edata[2]);
+
+ 							// set correct time zone
+
+ 							event.setMinutes(event.getTimezoneOffset());
+
+ 							//add event to calendar if year and month match
+
+ 							if(cal.getFullYear()==event.getFullYear()
+ 								&& cal.getMonth()==event.getMonth())
+ 							{
+ 								var day = String(event.getDate());
+
+ 								day = day.length==1 ? "0"+day:day;
+
+ 								$("<a>")
+ 									.hide()
+ 									.attr("href","view.php?event_id"+data)
+ 									.text(entry.event_title)
+ 									.insertAfter($("strong:contains("+day+")"))
+ 									.delay(1000)
+ 									.fadeIn("slow");
+ 							}
+					},	
+
+					"deserialize":function(str){
+
+							//drop all couples name-value for two part
+
+						var data = str.split("&");
+
+							//name variables for use them in cycle
+
+						var	pairs = [], entry = {}, key, val;
+
+							//do cycle with all couples
+
+						for(x in data)
+						{
+							//show  couples in massivee view
+
+							pairs = data[x].split("=");
+
+							//first element - name
+
+							key = pairs[0];
+
+							//second element - value
+
+							val = pairs[1];
+
+							//save all values like object property
+
+							entry[key] = fx.urldecode(val);
+
+						} 
+
+						return entry;
+					},
+
+					//decoding string value
+
+					"urldecode":function(str){
+
+						//made space from +
+
+						var converted = str.replace(/\+/g, ' ');
+
+						//make reverse enother obj
+
+						return (converted);
 					}
 		};
 
@@ -163,12 +270,26 @@ jQuery(function($){
 
 	//show form edit  like modalwindow
 
-	$(".admin").live("click",function(event)
+	$(".admin-options form,.admin").live("click",function(event)
 		{
 
 			/* stop send form */
 
 			event.preventDefault();
+
+			//make attribute 'action' for send form
+
+			var action = $(event.target).attr("name")||"edit_event";
+
+			//save element with name "event_id"
+
+			id = $(event.target)
+						.siblings("input[name=event_id]")
+						.val();
+
+			//create parametr for identification if it instal
+
+			id = (id!=undefined)?"&event_id"+id:"";
 
 			var action = "edit_event";
 
@@ -178,16 +299,19 @@ jQuery(function($){
 				url: processFile,
 				type: "POST",
 				// data: "action=event_view&" + data,
-				data: "action="+action,
+				data: "action="+action+id,
 				success: function(data){
 
 					// hide form
 
-					var form = $(data).hide(),
+					var form = $(data).hide();
 
 					//make sure that modal-window exists
 
-					modal = fx.initModal();
+					var modal = fx.initModal();
+							.children(":not(.modal-close-btn)")
+							.remove()
+							.end();
 
 					//call boxin function with her parametrs
 
@@ -216,5 +340,61 @@ jQuery(function($){
 				console.log("click was made on edit new event buttom!");
 
 		});
+
+		//Edit events without reload page
+
+		$(".edit-form input[type=submit]").live("click", function(event) {
+			/* to prevent default action for form*/
+
+			event.preventDefault();
+
+			//serialize data in form for use it with ajax function
+
+			var formData = $(this).parents("form").serialize();
+
+			//show message for check in console
+
+			console.log(formData);
+
+			//send data to process file
+
+			$.ajax({
+				url: processFile,
+				type: "POST",
+				data: formData,
+				success:function(data){
+
+					//slowly disapearens modal-window
+
+					fx.boxout();
+
+					//add event to calendar
+
+					fx.addevent(data,formData);
+
+					//write message into console 
+
+					console.log("Save event!!!");
+				},
+				error:function(msg) {
+
+					/*alert*/
+					
+					alert(msg);
+
+				}
+			});
+			
+		});
+
+		// make buttom Cancel in edit event forms 
+		//functions like buttom Exit  for slowly
+		//close and disappear modal-window and overlay
+
+		$(".edit-form a:contains('Cancel')").live("click", function(event){
+
+				fx.boxout(event);
+
+		}); 
 
 });

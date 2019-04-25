@@ -22,6 +22,11 @@ foreach ( $C as $name => $val)
 			'edit_event' => array(
 					'object' => 'Calendar',
 					'method' => 'displayForm'
+			),
+
+			'event_edit' => array(
+					'object' => 'Calendar',
+					'method' => 'processForm'
 			)
 	);
 

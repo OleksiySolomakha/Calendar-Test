@@ -139,13 +139,15 @@
 		{
 
 			$cal_month = date('F Y', strtotime($this -> _useDate));
+
+			$cal_id = date('Y-m', strtotime($this->_useDate));
 			
 			$weekdays = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 
 								'Fri', 'Sat');
 
 			// Header to HTML for calendar
 
-			$html = "\n\t<h2>$cal_month</h2>";
+			$html = "\n\t<h2 id=\"month-$cal_id\">$cal_month</h2>";
 
 			for ($d = 0, $lables = NULL; $d < 7; ++$d )
 			{ 
@@ -448,7 +450,11 @@ FORM_MARKUP;
 				
 				$stmt->closeCursor();
 
-				return TRUE;
+				//return event ID
+
+				return $this->dbo->lasrInsertId();
+
+				//return TRUE;
 
 			}
 
