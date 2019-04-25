@@ -1,6 +1,6 @@
 <?php
 session_start();
-	include_once '../../../sys/config/db-cred.inc.php';
+	include_once ('../../../sys/config/db-cred.inc.php');
 
 	// find constante 
 

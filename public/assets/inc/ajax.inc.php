@@ -17,6 +17,11 @@ foreach ( $C as $name => $val)
 			'event_view' => array(
 					'object' => 'Calendar',
 					'method' => '_displayEvent'
+			),
+
+			'edit_event' => array(
+					'object' => 'Calendar',
+					'method' => 'displayForm'
 			)
 	);
 

@@ -22,7 +22,7 @@ jQuery(function($){
 						//add class and it to descriptor
 
 						return $("<div>")
-								.hide()
+							.hide()
 							.addClass("modal-window")
 							.appendTo("body");
 					}
@@ -133,6 +133,7 @@ jQuery(function($){
 				// $(".modal-window")
 				// 	.remove();
 			})
+
 		.appendTo(modal);
 
 		//dowload information about event from DB
@@ -140,7 +141,8 @@ jQuery(function($){
 		$.ajax({
 			url: processFile,
 			type: "POST",
-			data: "action=event_view&" + data,
+			// data: "action=event_view&" + data,
+			data: "action=event_view&"+data,
 			success: function(data){
 
 				fx.boxin(data, modal);
@@ -158,5 +160,61 @@ jQuery(function($){
 
 		// console.log(data);
 	});
+
+	//show form edit  like modalwindow
+
+	$(".admin").live("click",function(event)
+		{
+
+			/* stop send form */
+
+			event.preventDefault();
+
+			var action = "edit_event";
+
+			//dowload form for edit event abd show it 
+
+			$.ajax({
+				url: processFile,
+				type: "POST",
+				// data: "action=event_view&" + data,
+				data: "action="+action,
+				success: function(data){
+
+					// hide form
+
+					var form = $(data).hide(),
+
+					//make sure that modal-window exists
+
+					modal = fx.initModal();
+
+					//call boxin function with her parametrs
+
+					fx.boxin(null, modal);
+
+					//download form in window, moke slow appearens inf
+
+					form
+						.appendTo(modal)
+						.addClass("edit-form")
+						.fadeIn("slow");
+
+					// fx.boxin(data, modal);
+					//show information about event
+					// console.log('success data', data);
+					// modal.append(data);
+				},
+				error: function(msg)
+				{
+					alert(msg);
+				}
+				});
+
+				// show message about working status 
+
+				console.log("click was made on edit new event buttom!");
+
+		});
 
 });
