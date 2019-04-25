@@ -41,7 +41,7 @@ foreach ( $C as $name => $val)
 function __autoload($class_name)
 {
 	$filename = '../../../sys/class/class.'
-			.strtolower($class_name) . '.inc.php';
+			.strtolower($class_name).'.inc.php';
 
 	if (file_exists($filename))
 	{

@@ -22,7 +22,7 @@ jQuery(function($){
 						//add class and it to descriptor
 
 						return $("<div>")
-							//.hide()
+								.hide()
 							.addClass("modal-window")
 							.appendTo("body");
 					}
@@ -47,7 +47,7 @@ jQuery(function($){
 							fx.boxout(event);
 						})
 
-						appendTo("body");
+						.appendTo("body");
 
 						//download data in modal-window
 
@@ -64,17 +64,17 @@ jQuery(function($){
 							
 				},
 
-				//slowly window disappeared
+				// //slowly window disappeared
 
 				"boxout":function(event){
 
-						if(event!=undefined){
-
+						if(event!=undefined)
+						{
 							event.preventDefault();
 						}
 						//remove class Active from all links
 
-						$("a").removeClass('active');
+						$("a").removeClass("active");
 
 						//make slowly window disappear
 						//then remove it from DOM
@@ -128,12 +128,12 @@ jQuery(function($){
 
 				//end action 
 
-				//event.preventDefault();
-				//delete modal-window
+				// event.preventDefault();
+				// delete modal-window
 				// $(".modal-window")
 				// 	.remove();
 			})
-		.appendTo(	modal);
+		.appendTo(modal);
 
 		//dowload information about event from DB
 
@@ -143,7 +143,7 @@ jQuery(function($){
 			data: "action=event_view&" + data,
 			success: function(data){
 
-				fx.boxin(data,modal);
+				fx.boxin(data, modal);
 				//show information about event
 				// console.log('success data', data);
 				// modal.append(data);

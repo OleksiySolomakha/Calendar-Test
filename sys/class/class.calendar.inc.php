@@ -2,7 +2,7 @@
 /**
  * Класс с поключением к БД, для cоздания календаря и работай с ним
  */
-include_once '../sys/class/class.db_connect.inc.php';
+	include_once '../sys/class/class.db_connect.inc.php';
 	// include_once (__DIR__ . '/class.db_connect.inc.php');
 
 

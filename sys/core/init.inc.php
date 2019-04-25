@@ -1,6 +1,6 @@
 <?php
 //session start
-	session_start();
+session_start();
 
 	//defender mark
 
