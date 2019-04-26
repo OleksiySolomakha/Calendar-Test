@@ -95,19 +95,19 @@ jQuery(function($){
 
 							//create obj "date" for this month
 
-							cal = new Date(NaN);
+							cal = new Date(NaN),
 
 							//create obj "date" for new event 
 
-							event = new Date(NaN);
+							event = new Date(NaN),
 
 							// take from 'id, h2' calendar month 
  							
- 							cdata = $("h2").attr("id").split('-');
+ 							cdata = $("h2").attr("id").split('-'),
 
  							// take day , month adn year from event
 
- 							date = entry.event_start.split(' ')[0];
+ 							date = entry.event_start.split(' ')[0],
 
  							//break event data by parts
 
@@ -143,6 +143,18 @@ jQuery(function($){
  									.fadeIn("slow");
  							}
 					},	
+
+					// remove event after delete
+
+					"removeevent":function()
+					{
+						//exclude every event with class active
+
+						$(".active")
+							.fadeOut("slow", function() {
+									$(this).remove();
+							});
+					},
 
 					"deserialize":function(str){
 
@@ -289,7 +301,7 @@ jQuery(function($){
 
 			//create parametr for identification if it instal
 
-			id = (id!=undefined)?"&event_id"+id:"";
+			id = (id!=undefined) ? "&event_id="+id : "";
 
 			var action = "edit_event";
 
@@ -302,7 +314,7 @@ jQuery(function($){
 				data: "action="+action+id,
 				success: function(data){
 
-					// hide form
+					//hide form
 
 					var form = $(data).hide();
 
@@ -315,7 +327,7 @@ jQuery(function($){
 
 					//call boxin function with her parametrs
 
-					fx.boxin(null, modal);
+					fx.boxin(null,modal);
 
 					//download form in window, moke slow appearens inf
 
@@ -333,7 +345,7 @@ jQuery(function($){
 				{
 					alert(msg);
 				}
-				});
+			});
 
 				// show message about working status 
 
@@ -350,7 +362,32 @@ jQuery(function($){
 
 			//serialize data in form for use it with ajax function
 
-			var formData = $(this).parents("form").serialize();
+			var formData = $(this).parents("form").serialize(),
+
+			// save "submit" buttom means
+
+			submitVal = $(this).val(),
+
+			//check does event must be removed
+
+			remove = false;
+
+			//if it is delete form add action
+
+			if ($(this).attr("name")=="confirm_delete")
+			{
+				// add needfull information into string
+
+				formData += "&action=confirm_delete"+"&confirm_delete="+submitVal;
+
+				//if event delete , made mark for removing it from calendar
+
+				if (submitVal=="Yes I agree!")
+				{
+					remove =true;
+				}
+
+			}
 
 			//show message for check in console
 
@@ -364,15 +401,29 @@ jQuery(function($){
 				data: formData,
 				success:function(data){
 
+					if(remove===true)
+					{
+						fx.removeevent();
+					}
+
 					//slowly disapearens modal-window
 
-					fx.boxout();
+					//fx.boxout();
+
+					//add event in calendar if it new
+
+					if ($("[name=event_id]").val().length==0 && 
+						remove===false)
+					{
 
 					//add event to calendar
 
 					fx.addevent(data,formData);
 
-					//write message into console 
+					 
+					}
+
+					//write message into console
 
 					console.log("Save event!!!");
 				},

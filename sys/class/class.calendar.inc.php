@@ -452,7 +452,7 @@ FORM_MARKUP;
 
 				//return event ID
 
-				return $this->dbo->lasrInsertId();
+				return $this->db->lastInsertId();
 
 				//return TRUE;
 

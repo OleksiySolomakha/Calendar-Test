@@ -33,6 +33,7 @@ session_start();
 
 					'header' => 'Location: ../../'	
 						),
+				
 				//end session array
 
 				'user_logout' => array(
