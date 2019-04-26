@@ -320,7 +320,7 @@ jQuery(function($){
 
 					//make sure that modal-window exists
 
-					var modal = fx.initModal();
+					var modal = fx.initModal()
 							.children(":not(.modal-close-btn)")
 							.remove()
 							.end();
