@@ -87,43 +87,43 @@ jQuery(function($){
 
 					//add new event after save
 
-					"addevent":function(data,formData){
+				"addevent":function(data,formData){
 
-							//make obj from string
+						//make obj from string
 
-							var entry = fx.deserialize(formData),
+						var entry = fx.deserialize(formData),
 
-							//create obj "date" for this month
+						//create obj "date" for this month
 
-							cal = new Date(NaN),
+						cal = new Date(NaN),
 
-							//create obj "date" for new event 
+						//create obj "date" for new event 
 
-							event = new Date(NaN),
+						event = new Date(NaN),
 
-							// take from 'id, h2' calendar month 
+						// take from 'id, h2' calendar month 
  							
- 							cdata = $("h2").attr("id").split('-'),
+ 						cdata = $("h2").attr("id").split('-'),
 
- 							// take day , month adn year from event
+ 						// take day , month adn year from event
 
- 							date = entry.event_start.split(' ')[0],
+ 						date = entry.event_start.split(' ')[0],
 
- 							//break event data by parts
+ 						//break event data by parts
 
- 							edata = date.split('-');
+ 						edata = date.split('-');
 
- 							//make date for calendar obj "date"
+ 						//make date for calendar obj "date"
 
- 							cal.setFullYear(cdata[1], cdata[2], 1);
+ 						cal.setFullYear(cdata[1], cdata[2], 1);
 
- 							//make date for event obj "date"  
+ 						//make date for event obj "date"  
 
- 							event.setFullYear(edata[0], edata[1], edata[2]);
+ 						event.setFullYear(edata[0], edata[1], edata[2]);
 
- 							// set correct time zone
+ 						// set correct time zone
 
- 							event.setMinutes(event.getTimezoneOffset());
+ 						event.setMinutes(event.getTimezoneOffset());
 
  							//add event to calendar if year and month match
 
@@ -408,7 +408,7 @@ jQuery(function($){
 
 					//slowly disapearens modal-window
 
-					//fx.boxout();
+					// fx.boxout();
 
 					//add event in calendar if it new
 
@@ -420,12 +420,14 @@ jQuery(function($){
 
 					fx.addevent(data,formData);
 
-					 
+					
+
 					}
 
 					//write message into console
 
 					console.log("Save event!!!");
+					
 				},
 				error:function(msg) {
 
