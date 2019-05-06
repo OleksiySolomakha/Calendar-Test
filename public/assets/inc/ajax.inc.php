@@ -24,10 +24,10 @@ foreach ( $C as $name => $val)
 					'method' => 'displayForm'
 			),
 
-			'event_edit' => array(
-					'object' => 'Calendar',
-					'method' => 'processForm'
-			),
+			// 'event_edit' => array(
+			// 		'object' => 'Calendar',
+			// 		'method' => 'processForm'
+			// ),
 
 			'delete_event' => array(
 					'object' => 'Calendar',

@@ -81,7 +81,10 @@ jQuery(function($){
 						$(".modal-window,.modal-overlay")
 							.fadeOut("slow", function() {
 								$(this).remove();
+								console.log("window close");
 							});
+
+						
 
 					},
 
@@ -154,6 +157,7 @@ jQuery(function($){
 							.fadeOut("slow", function() {
 									$(this).remove();
 							});
+							console.log("Event delete");
 					},
 
 					"deserialize":function(str){
@@ -282,6 +286,13 @@ jQuery(function($){
 
 	//show form edit  like modalwindow
 
+	// $(".admin").live("click",function(event){
+
+	// event.preventDefault();
+
+	// console.log("press buttom EDIT !");
+	// });
+
 	$(".admin-options form,.admin").live("click",function(event)
 		{
 
@@ -327,7 +338,7 @@ jQuery(function($){
 
 					//call boxin function with her parametrs
 
-					fx.boxin(null,modal);
+					  fx.boxin(null,modal);
 
 					//download form in window, moke slow appearens inf
 
@@ -336,9 +347,11 @@ jQuery(function($){
 						.addClass("edit-form")
 						.fadeIn("slow");
 
-					// fx.boxin(data, modal);
+					 fx.boxin(data, modal);
+
 					//show information about event
-					// console.log('success data', data);
+
+					console.log('success data', data);
 					// modal.append(data);
 				},
 				error: function(msg)
@@ -360,6 +373,8 @@ jQuery(function($){
 
 			event.preventDefault();
 
+			console.log("Start send data in db");
+
 			//serialize data in form for use it with ajax function
 
 			var formData = $(this).parents("form").serialize(),
@@ -380,18 +395,22 @@ jQuery(function($){
 
 				formData += "&action=confirm_delete"+"&confirm_delete="+submitVal;
 
+				console.log("Confirm delete, go to confirm elete form");
+
 				//if event delete , made mark for removing it from calendar
 
 				if (submitVal=="Yes I agree!")
 				{
-					remove =true;
+					remove = true;
+
+					console.log("Event was delete");
 				}
 
 			}
 
 			//show message for check in console
 
-			console.log(formData);
+			console.log("form is working");
 
 			//send data to process file
 
@@ -406,15 +425,17 @@ jQuery(function($){
 						fx.removeevent();
 					}
 
-					//slowly disapearens modal-window
-
-					// fx.boxout();
+					
 
 					//add event in calendar if it new
 
 					if ($("[name=event_id]").val().length==0 && 
 						remove===false)
 					{
+						
+					// modal-window slowly desappear 
+
+					fx.boxout();
 
 					//add event to calendar
 
@@ -423,6 +444,9 @@ jQuery(function($){
 					
 
 					}
+					//slowly disapearens modal-window
+
+					fx.boxout();
 
 					//write message into console
 
@@ -447,6 +471,8 @@ jQuery(function($){
 		$(".edit-form a:contains('Cancel')").live("click", function(event){
 
 				fx.boxout(event);
+
+				console.log("cancel action!!");
 
 		}); 
 

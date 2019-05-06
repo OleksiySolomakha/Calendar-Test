@@ -13,7 +13,7 @@ session_start();
 
 	//searching massive for actions
 
-	$ations = array(
+	$actions = array(
 				'event_edit' => array(
 
 					'object' => 'Calendar',
@@ -48,10 +48,10 @@ session_start();
 					);
 	
 
-	if ($_POST['token']==$_SESSION['token'] && isset($ations[$_POST['action']])) 
+	if ($_POST['token']==$_SESSION['token'] && isset($actions[$_POST['action']])) 
 	{
 
-		$use_array = $ations[$_POST['action']];
+		$use_array = $actions[$_POST['action']];
 		
 		$obj = new $use_array['object']($dbo);
 
