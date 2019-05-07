@@ -142,7 +142,7 @@ jQuery(function($){
  									.attr("href","view.php?event_id"+data)
  									.text(entry.event_title)
  									.insertAfter($("strong:contains("+day+")"))
- 									.delay(1000)
+ 									.delay(2000)
  									.fadeIn("slow");
  							}
 					},	
@@ -205,7 +205,7 @@ jQuery(function($){
 
 						//make reverse enother obj
 
-						return (converted);
+						return decodeURIComponent(converted);
 					}
 		};
 
@@ -221,7 +221,7 @@ jQuery(function($){
 
 		$(this).addClass("active");	
 		//document.getElementById("modal-window");
-		console.log($(this).text());
+		//console.log($(this).text());
 
 		//take attribute from string "href"
 
@@ -270,7 +270,7 @@ jQuery(function($){
 
 				fx.boxin(data, modal);
 				//show information about event
-				// console.log('success data', data);
+				 console.log('success data', data);
 				// modal.append(data);
 			},
 			error: function(msg) {
@@ -322,7 +322,7 @@ jQuery(function($){
 				url: processFile,
 				type: "POST",
 				// data: "action=event_view&" + data,
-				data: "action="+action+id,
+				data: "action="+action,
 				success: function(data){
 
 					//hide form
@@ -371,19 +371,21 @@ jQuery(function($){
 
 			event.preventDefault();
 
-			console.log("Start send data in db");
-
 			//serialize data in form for use it with ajax function
 
-			var formData = $(this).parents("form").serialize(),
+			var formData = $(this).parents("form").serialize();
+			
+			//check!!!!
 
+			console.log("Start send data in db", formData);
+			
 			// save "submit" buttom means
-
-			submitVal = $(this).val(),
+			
+			var submitVal = $(this).val();
 
 			//check does event must be removed
 
-			remove = false;
+			var remove = false;
 
 			//if it is delete form add action
 
@@ -408,7 +410,7 @@ jQuery(function($){
 
 			//show message for check in console
 
-			console.log("form is working");
+			//console.log("form is working");
 
 			//send data to process file
 
@@ -418,20 +420,26 @@ jQuery(function($){
 				data: formData,
 				success:function(data){
 
-					if(remove===true)
-					{
-						fx.removeevent();
-					}
+					// if(remove===true)
+					// {
+					// 	fx.removeevent();
+					// }
 
 					
 
-					//add event in calendar if it new
+					// //add event in calendar if it new
 
-					if ($("[name=event_id]").val().length==0 && 
-						remove===false)
-					{
+					// if ($("[name=event_id]").val().length==0 && 
+					// 	remove===false)
+					// {
 						
 					// modal-window slowly desappear 
+
+					// fx.boxout();
+
+					
+					// }
+					//slowly disapearens modal-window
 
 					fx.boxout();
 
@@ -439,16 +447,10 @@ jQuery(function($){
 
 					fx.addevent(data,formData);
 
-					
-
-					}
-					//slowly disapearens modal-window
-
-					fx.boxout();
 
 					//write message into console
 
-					console.log("Save event!!!");
+					console.log("Save event!!!", data );
 					
 				},
 				error:function(msg) {

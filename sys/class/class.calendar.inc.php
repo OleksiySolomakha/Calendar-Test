@@ -357,10 +357,10 @@ return <<<FORM_MARKUP
 					<input type="text" name="event_end" id="event_end"
 						value="$event->end"/>
 
-					<lable for="event_discription">Discription Trulala</lable>
+					<lable for="event_description">Description Trulala</lable>
 
-					<textarea name="event_discription" 
-					id="event_discription">$event->description</textarea>
+					<textarea name="event_description" 
+					id="event_description">$event->description</textarea>
 
 					<input type="hidden" name="event_id" value="$event->id"/>
 
@@ -450,7 +450,7 @@ FORM_MARKUP;
 				
 				$stmt->closeCursor();
 
-				//return event ID
+				//return event ID for we coulf see new event without reload
 
 				return $this->db->lastInsertId();
 
@@ -631,7 +631,7 @@ CONFIRM_DELETE;
 
 return <<<ADMIN_OPTIONS
 
-			<a href ="admin.php" class ="admin">+Add new message !!!!!!!</a>
+			<a href ="admin.php" class ="admin">New message</a>
 				<form action="assets/inc/process.inc.php" method="post">	
 					
 					<div>
