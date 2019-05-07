@@ -636,7 +636,7 @@ return <<<ADMIN_OPTIONS
 					
 					<div>
 	
-						<input type="submit" value="Go AWAY" class="admin" />
+						<input type="submit" value="Go AWAY" class="exit" />
 
 						<input type="hidden" name="token" value="$_SESSION[token]"/>
 

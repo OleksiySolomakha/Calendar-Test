@@ -327,18 +327,18 @@ jQuery(function($){
 
 					//hide form
 
-					var form = $(data).hide();
+					var form = $(data).hide(),
 
 					//make sure that modal-window exists
 
-					var modal = fx.initModal()
+					 modal = fx.initModal()
 							.children(":not(.modal-close-btn)")
 							.remove()
 							.end();
 
 					//call boxin function with her parametrs
 
-					  fx.boxin(null,modal);
+					 fx.boxin(null,modal);
 
 					//download form in window, moke slow appearens inf
 
@@ -346,8 +346,6 @@ jQuery(function($){
 						.appendTo(modal)
 						.addClass("edit-form")
 						.fadeIn("slow");
-
-					 fx.boxin(data, modal);
 
 					//show information about event
 
