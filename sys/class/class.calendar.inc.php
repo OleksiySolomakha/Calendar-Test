@@ -34,32 +34,32 @@
 
 			if (isset($useDate)) 
 			{
-				$this -> _useDate = $useDate;	
+				$this ->_useDate = $useDate;	
 			}
 			else
 			{
-				$this -> _useDate = date('Y-m-d H:i:s');
+				$this ->_useDate = date('Y-m-d H:i:s');
 			}
 
 			// transform in UNIX timestamp, then define month and year
 			// wich will be used to create a calendar
 			
-			$ts = strtotime($this -> _useDate);
-			$this -> _m = date('m', $ts);
-			$this -> _y = date('y', $ts);
+			$ts = strtotime($this ->_useDate);
+			$this ->_m = date('m', $ts);
+			$this ->_y = date('y', $ts);
 
 			//define how many days in month
 
-			$this -> _daysInMonth = cal_days_in_month(
+			$this ->_daysInMonth = cal_days_in_month(
 				CAL_GREGORIAN,
-				$this -> _m,
-				$this -> _y
+				$this ->_m,
+				$this ->_y
 			);
 
 			//define, from what day of week month begin
 
 			$ts = mktime(0, 0, 0, $this -> _m, 1, $this -> _y);
-			$this -> _startDay = date('w', $ts);
+			$this ->_startDay = date('w', $ts);
 
 		}
 
@@ -138,7 +138,7 @@
 		public function _buildCalendar()
 		{
 
-			$cal_month = date('F Y', strtotime($this -> _useDate));
+			$cal_month = date('F Y', strtotime($this->_useDate));
 
 			$cal_id = date('Y-m', strtotime($this->_useDate));
 			
@@ -167,12 +167,12 @@
 			$html .= "\n\t<ul>"; // new list 
 
 			for ($i = 1, $C = 1, $t = date('j'), $m = date('m'), $y = date('y');
-			 $C<= $this -> _daysInMonth; ++$i)
+			 $C<= $this ->_daysInMonth; ++$i)
 			{ 
 				
-				$class = $i <= $this -> _startDay ? "fill" :NULL;
+				$class = $i <= $this ->_startDay ? "fill" :NULL;
 
-				if ($C==$t && $m==$this -> _m && $y==$this -> _y ) 
+				if ($C==$t && $m==$this ->_m && $y==$this ->_y ) 
 				{
 
 					$class = "today";
@@ -183,7 +183,7 @@
 				
 				$le = "\n\t\t</li>";
 
-				if ($this -> _startDay<$i && $this -> _daysInMonth >= $C)
+				if ($this ->_startDay<$i && $this ->_daysInMonth >= $C)
 				{
 					//form data about events
 
@@ -196,7 +196,7 @@
 						{
 
 							$link = '<a href = "view.php?event_id='
-							. $event -> id . '">' . $event -> title . '</a>';
+							. $event -> id . '">' . $event ->title . '</a>';
 
 							$event_info .= "\n\t\t\t$link";
 						
@@ -446,7 +446,7 @@ FORM_MARKUP;
 
 				$stmt->bindParam(":end", $end, PDO::PARAM_STR);
 
-				$success = $stmt->execute();
+				$stmt->execute();
 				
 				$stmt->closeCursor();
 
@@ -668,7 +668,7 @@ ADMIN_OPTIONS;
 
 return <<<ADMIN_OPTIONS
 		
-	<div class="admin_options">
+	<div class="admin-options">
 		<form action="admin.php" method="post">
 			<p>
 				<input type="submit" name="edit_event"

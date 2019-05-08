@@ -135,14 +135,20 @@ jQuery(function($){
  							{
  								var day = String(event.getDate());
 
+ 								//if(day.lenght==1){day="0"+day;}
+
  								day = day.length==1 ? "0"+day:day;
 
+ 						
+
+ 								console.log(day);//check day
+ 								
  								$("<a>")
  									.hide()
- 									.attr("href","view.php?event_id"+data)
+ 									.attr("href","view.php?event_id="+data)
  									.text(entry.event_title)
  									.insertAfter($("strong:contains("+day+")"))
- 									.delay(2000)
+ 									.delay(1500)
  									.fadeIn("slow");
  							}
 					},	
@@ -152,7 +158,6 @@ jQuery(function($){
 					"removeevent":function()
 					{
 						//exclude every event with class active
-
 						$(".active")
 							.fadeOut("slow", function() {
 									$(this).remove();
@@ -284,15 +289,7 @@ jQuery(function($){
 		// console.log(data);
 	});
 
-	//show form edit  like modalwindow
-
-	// $(".admin").live("click",function(event){
-
-	// event.preventDefault();
-
-	// console.log("press buttom EDIT !");
-	// });
-
+	
 	$(".admin-options form,.admin").live("click",function(event)
 		{
 
@@ -306,15 +303,17 @@ jQuery(function($){
 
 			//save element with name "event_id"
 
-			id = $(event.target)
+			 id = $(event.target)
 						.siblings("input[name=event_id]")
 						.val();
 
 			//create parametr for identification if it instal
 
-			id = (id!=undefined) ? "&event_id="+id : "";
+			 id = (id!=undefined) ? "&event_id="+id : "";
 
-			var action = "edit_event";
+			// var action = "edit_event";
+
+			//var action ="delete_event";
 
 			//dowload form for edit event abd show it 
 
@@ -322,7 +321,7 @@ jQuery(function($){
 				url: processFile,
 				type: "POST",
 				// data: "action=event_view&" + data,
-				data: "action="+action,
+				data: "action="+action+id,
 				success: function(data){
 
 					//hide form
@@ -349,7 +348,7 @@ jQuery(function($){
 
 					//show information about event
 
-					console.log('success data', data);
+					console.log('success data', action);
 					// modal.append(data);
 				},
 				error: function(msg)
@@ -420,37 +419,30 @@ jQuery(function($){
 				data: formData,
 				success:function(data){
 
-					// if(remove===true)
-					// {
-					// 	fx.removeevent();
-					// }
-
-					
-
-					// //add event in calendar if it new
-
-					// if ($("[name=event_id]").val().length==0 && 
-					// 	remove===false)
-					// {
-						
-					// modal-window slowly desappear 
-
-					// fx.boxout();
-
-					
-					// }
-					//slowly disapearens modal-window
+					if(remove===true)
+					{
+						fx.removeevent();
+					}
 
 					fx.boxout();
 
-					//add event to calendar
+					//add event in calendar if it new
 
-					fx.addevent(data,formData);
+					 if ($("[name=event_id]").val().length==0&&remove===false)
+					{
+						
+					// modal-window slowly desappear 
+
+						fx.addevent(data,formData);
+					}
+					
+					
+					//slowly disapearens modal-windo
 
 
 					//write message into console
 
-					console.log("Save event!!!", data );
+					//console.log("Save event!!!", data );
 					
 				},
 				error:function(msg) {

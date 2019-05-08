@@ -29,14 +29,14 @@ foreach ( $C as $name => $val)
 					'method' => 'processForm'
 			),
 
-			// 'delete_event' => array(
-			// 		'object' => 'Calendar',
-			// 		'method' => 'confirmDelete'
-			// ),
+			'delete_event' => array(
+					'object' => 'Calendar',
+					'method' => 'confirmDelete'
+			),
 
 			'confirm_delete' => array(
-					'object' =>'Calendar',
-					'method' =>'confirmDelete'
+					'object' => 'Calendar',
+					'method' => 'confirmDelete'
 			)
 	);
 
@@ -69,6 +69,4 @@ function __autoload($class_name)
 	}
 
 }
-
-
  ?>
