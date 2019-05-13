@@ -108,41 +108,58 @@ jQuery(function($){
  							
  						cdata = $("h2").attr("id").split('-'),
 
- 						// take day , month adn year from event
+ 						// take day , month and year from event
 
  						date = entry.event_start.split(' ')[0],
 
  						//break event data by parts
 
  						edata = date.split('-');
+ 						console.log(event);
+ 						console.log(cdata);
+ 						console.log(date);
 
  						//make date for calendar obj "date"
 
- 						cal.setFullYear(cdata[1], cdata[2], 1);
+ 						 cal.setFullYear(cdata[1], cdata[2], 1);
+ 						 console.log(cal.setFullYear(cdata[1], cdata[2], 1));
 
  						//make date for event obj "date"  
 
- 						event.setFullYear(edata[0], edata[1], edata[2]);
+ 						 event.setFullYear(edata[0], edata[1], edata[2]);
+ 						 console.log(event.setFullYear(edata[0], edata[1], edata[2]));
 
  						// set correct time zone
 
- 						event.setMinutes(event.getTimezoneOffset());
+ 						//event.setMinutes(event.getTimezoneOffset());
+
+ 				
 
  							//add event to calendar if year and month match
 
+ 							//if(true)
  							if(cal.getFullYear()==event.getFullYear()
  								&& cal.getMonth()==event.getMonth())
  							{
+
  								var day = String(event.getDate());
-
- 								//if(day.lenght==1){day="0"+day;}
-
- 								day = day.length==1 ? "0"+day:day;
-
  						
+ 								//var day = edata[2]
+ 								 //console.log(event);
 
- 								console.log(day);//check day
- 								
+ 								 console.log(day);
+								console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
+								//check day
+
+ 								var day = day.length==1 ? "0" + day : day;
+ 								console.log(day);
+ 								// if(day.lenght==1){
+
+ 								// 	day="0"+day;
+
+ 								// day+=1; 
+ 								// exit($day);}
+
  								$("<a>")
  									.hide()
  									.attr("href","view.php?event_id="+data)
@@ -315,7 +332,7 @@ jQuery(function($){
 
 			//var action ="delete_event";
 
-			//dowload form for edit event abd show it 
+			//dowload form for edit event add show it 
 
 			$.ajax({
 				url: processFile,
@@ -394,7 +411,7 @@ jQuery(function($){
 
 				formData += "&action=confirm_delete"+"&confirm_delete="+submitVal;
 
-				console.log("Confirm delete, go to confirm elete form");
+				console.log("Confirm delete, go to confirm delete form");
 
 				//if event delete , made mark for removing it from calendar
 

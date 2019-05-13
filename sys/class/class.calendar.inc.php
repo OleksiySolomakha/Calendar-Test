@@ -137,7 +137,6 @@
 
 		public function _buildCalendar()
 		{
-
 			$cal_month = date('F Y', strtotime($this->_useDate));
 
 			$cal_id = date('Y-m', strtotime($this->_useDate));
@@ -149,7 +148,7 @@
 
 			$html = "\n\t<h2 id=\"month-$cal_id\">$cal_month</h2>";
 
-			for ($d = 0, $lables = NULL; $d < 7; ++$d )
+			for ($d = 0, $lables = NULL; $d<7; ++$d )
 			{ 
 				
 				$lables .="\n\t\t<li>" . $weekdays[$d] . "</li>";
@@ -216,7 +215,7 @@
 					$date = "&nbsp;";
 
 				}
-					// if is this day saturnday go to next string
+					// if this day saturnday go to next string
 
 				$wrap = $i!=0 && $i%7==0 ? "\n\t</ul>\n\t<ul>" : NULL; 
 
@@ -396,13 +395,13 @@ FORM_MARKUP;
 			//took data from form
 
 			$title = htmlentities($_POST['event_title'], ENT_QUOTES);
-//print_r($title);exit;
+
 			$desc = htmlentities($_POST['event_description'], ENT_QUOTES);
 
 			$start = htmlentities($_POST['event_start'], ENT_QUOTES);
 
 			$end = htmlentities($_POST['event_end'], ENT_QUOTES);
-
+//print_r($start);exit;
 			//if id not taken, create new event 
 
 			if (empty($_POST['event_id']))
@@ -453,6 +452,8 @@ FORM_MARKUP;
 				//return event ID for we coulf see new event without reload
 
 				return $this->db->lastInsertId();
+
+				console.log($id);
 
 				//return TRUE;
 
