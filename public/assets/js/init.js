@@ -102,7 +102,7 @@ jQuery(function($){
 
 						//create obj "date" for new event 
 
-						event = new Date(NaN),
+						event = new Date(),
 
 						// take from 'id, h2' calendar month 
  							
@@ -131,7 +131,7 @@ jQuery(function($){
 
  						// set correct time zone
 
- 						//event.setMinutes(event.getTimezoneOffset());
+ 						event.setMinutes(event.getTimezoneOffset());
 
  				
 
@@ -148,6 +148,8 @@ jQuery(function($){
  								 //console.log(event);
 
  								 console.log(day);
+
+ 								 // find timezone (location)
 								console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
 								//check day
 
@@ -229,11 +231,21 @@ jQuery(function($){
 
 						return decodeURIComponent(converted);
 					}
-		};
+			};
+
+	//make dafault font-size for method dateZoom
+
+	$.fn.dateZoom.defaults.fontsize = "13px";
 
 	//catch event in modal window
+	//add zoom effect
 
-	$("li>a").live("click", function(event) {
+	$("li a")
+		.dateZoom()
+		.live("click",function(event)
+
+	//$("li>a").live("click", function(event)
+	 {
 
 		// cancel download view.php file when we click on it
 
@@ -399,6 +411,14 @@ jQuery(function($){
 			
 			var submitVal = $(this).val();
 
+			//save string about event start 
+
+			var start = $(this).siblings("[name=event_start]").val();
+
+			//save string about event end
+
+			var end = $(this).siblings("[name=event_end]").val();
+
 			//check does event must be removed
 
 			var remove = false;
@@ -422,6 +442,17 @@ jQuery(function($){
 					console.log("Event was delete");
 				}
 
+			}
+
+			//if event edit/create check correct data
+
+			if ($(this).siblings("[name = action]").val()=="event_edit")
+			{
+				if( !validDate(start) || !validDate(end) )
+				{
+					alert("Date must be like (YYYY-MM-DD HH:MM:SS)");
+					return false;
+				}
 			}
 
 			//show message for check in console

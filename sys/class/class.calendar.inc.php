@@ -401,7 +401,18 @@ FORM_MARKUP;
 			$start = htmlentities($_POST['event_start'], ENT_QUOTES);
 
 			$end = htmlentities($_POST['event_end'], ENT_QUOTES);
-//print_r($start);exit;
+
+			//if event_start and event_end aren't match with $pattern
+			//end session with error message
+			if (!$this->_validDate($start) || 
+				!$this->_validDate($end))
+				{
+
+					return "Wrong date format !!! use format: YYYY-MM-DD HH:MM:SS";	
+
+				}
+
+			//print_r($start);exit;
 			//if id not taken, create new event 
 
 			if (empty($_POST['event_id']))
@@ -587,6 +598,20 @@ CONFIRM_DELETE;
 
 		}
 
+
+		//check wright validation of date
+
+		private function _validDate($date)
+		{
+
+			//find patter of regular expressions 
+			// for check corect form of date
+
+			$pattern = '/^(\d{4}(-\d{2}){2} (\d{2})(:\d{2}){2})$/';
+
+			return preg_match($pattern, $date) == 1 ? TRUE : FALSE;
+
+		}
 		
 
 		// return obj from solo massive
